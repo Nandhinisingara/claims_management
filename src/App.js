@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
-  Route
+  Route  
 } from 'react-router-dom';
 
 import Login from './components/Login/Login';
@@ -37,8 +37,8 @@ class App extends Component {
         <div className="App">
           <Route exact path="/" component={LoginPage} />
           <Route path="/home" component={HomePage} />
-          <Route path="/claims" component={ClaimsList} />
-          <Route path="/edit" component={ClaimsEdit} />
+          <Route exact path="/claims" component={ClaimsList} />
+          <Route exact path="/claims/:id" component={ClaimsEdit} />
          
         </div>
       </Router>

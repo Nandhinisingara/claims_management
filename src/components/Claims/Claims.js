@@ -1,21 +1,71 @@
 import React, { Component } from 'react';
 import '../../../public/CSS/main.css';
-import {withRouter} from 'react-router-dom';
+import {withRouter, matchPath} from 'react-router-dom';
 import HeaderMenu from '../Header/HeaderMenu';
 import Footer from '../Footer/Footer';
+import axios from 'axios';
+import moment from 'moment';
 
 class Claims extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+        error : null,
+        isLoaded : false,
+        claims : [],
+        active: false          
+    };
+  }
+
+  componentDidMount(){    
+    
+    axios.get(`http://localhost:3001/claims/list`)    
+    .then(
+        // handle the result
+        (result) => {
+            this.setState({
+                isLoaded : true,
+                claims : result
+            });            
+        },
+
+        // Handle error 
+        (error) => {
+            this.setState({
+                isLoaded: true,
+                error
+            })
+        },
+    )
+}
+
   
   render() {
+    const {error, isLoaded, claims} = this.state;
+    if(error){
+      return ( <div>
+      <HeaderMenu />
+      <div className="container">
+      <div>Error in loading</div>
+      </div>
+      <Footer />
+      </div>);
+    }else if (!isLoaded) {
+      return ( <div>
+      <HeaderMenu />
+      <div className="container">
+     <div>Loading ...</div>
+     </div>
+     <Footer />
+     </div>);
+    } else {
+
     return (
        <div>
         <HeaderMenu />
-        <div className="container">
-  
-  
-  
-          
+        <div className="container">      
+                    
           <table id="customers" className="mt-4">
       <thead>
         <tr>
@@ -29,139 +79,33 @@ class Claims extends Component {
       <th className="edit-col">Action</th>
       </tr>
       </thead>
-      
-        
       <tbody>
-        <tr>
-          <td>710001</td>
-          <td>Maria Anders</td>
-          <td>567890</td>
-        <td>test</td>
-      <td>test</td>
-      <td>1/1/2020</td>
-      <td>1/1/2030</td>
-      <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
+        {
+      claims.map((claim, index) => (   
+     
+        <tr key = {index}>
+          <td>{claim.emp_id}</td>
+          <td>{claim.emp_name}</td>
+          <td>{claim.claim_no}</td>
+          <td>{claim.claim_type}</td>
+          <td>{claim.claim_program}</td>
+          <td>{claim.start_date ? moment(claim.start_date).format('MM-DD-YYYY') : '' }</td>
+          <td>{claim.end_date ? moment(claim.end_date).format('MM-DD-YYYY') : ''}</td>
+          <td><a href={'/claims/' + claim.claim_no}><i className="fa fa-edit" > Edit</i></a></td>          
         </tr>
-        <tr>
-          <td>710001</td>
-          <td>Maria Anders</td>
-          <td>567890</td>
-        <td>test</td>
-      <td>test</td>
-      <td>1/1/2020</td>
-      <td>1/1/2030</td>
-     <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-        </tr>
-       
-      <tr>
-         <td>710001</td>
-        <td>Maria Anders</td>
-        <td>567890</td>
-      <td>test</td>
-    <td>test</td>
-    <td>1/1/2020</td>
-    <td>1/1/2030</td>
-   <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-      </tr>
-      <tr>
-         <td>710001</td>
-        <td>Maria Anders</td>
-        <td>567890</td>
-      <td>test</td>
-    <td>test</td>
-    <td>1/1/2020</td>
-    <td>1/1/2030</td>
-   <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-      </tr>
-      <tr>
-         <td>710001</td>
-        <td>Maria Anders</td>
-        <td>567890</td>
-      <td>test</td>
-    <td>test</td>
-    <td>1/1/2020</td>
-    <td>1/1/2030</td>
-   <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-      </tr>
-      <tr>
-        <td>710001</td>
-        <td>Maria Anders</td>
-        <td>567890</td>
-      <td>test</td>
-    <td>test</td>
-    <td>1/1/2020</td>
-    <td>1/1/2030</td>
-   <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-      </tr>
-      <tr>
-         <td>710001</td>
-        <td>Maria Anders</td>
-        <td>567890</td>
-      <td>test</td>
-    <td>test</td>
-    <td>1/1/2020</td>
-    <td>1/1/2030</td>
-   <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-      </tr>
-      <tr>
-         <td>710001</td>
-        <td>Maria Anders</td>
-        <td>567890</td>
-      <td>test</td>
-    <td>test</td>
-    <td>1/1/2020</td>
-    <td>1/1/2030</td>
-   <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-      </tr>
-        <tr>
-           <td>710001</td>
-          <td>Maria Anders</td>
-          <td>567890</td>
-        <td>test</td>
-      <td>test</td>
-      <td>1/1/2020</td>
-      <td>1/1/2030</td>
-     <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-        </tr>
-        <tr>
-           <td>710001</td>
-          <td>Maria Anders</td>
-          <td>567890</td>
-        <td>test</td>
-      <td>test</td>
-      <td>1/1/2020</td>
-      <td>1/1/2030</td>
-     <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-        </tr>
-        <tr>
-           <td>710001</td>
-          <td>Maria Anders</td>
-          <td>567890</td>
-        <td>test</td>
-      <td>test</td>
-      <td>1/1/2020</td>
-      <td>1/1/2030</td>
-     <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-        </tr>
-        <tr>
-           <td>710001</td>
-          <td>Maria Anders</td>
-          <td>567890</td>
-        <td>test</td>
-      <td>test</td>
-      <td>1/1/2020</td>
-      <td>1/1/2030</td>
-     <td><a href="/edit"><i className="fa fa-edit" > Edit</i></a></td>
-        </tr>
-        </tbody>
-        
+        ))
+      }
+      </tbody>
+      
           </table>
-          
+  
  </div>
 
 <Footer />
-    </div>    
+    </div>  
+    
     );
+    }
   }
 }
 

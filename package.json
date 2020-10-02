@@ -1,13 +1,19 @@
 {
-  "name": "react-login-page",
+  "name": "claims_management",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.2.0",
     "css-loader": "^4.2.2",
+    "moment": "^2.28.0",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^15.5.4",
-    "react-router-dom": "^4.1.1"
+    "react-input-mask": "^3.0.0-alpha.2",
+    "react-moment": "^0.9.7",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^4.1.1",
+    "regex": "^0.1.1"
   },
   "devDependencies": {
     "bootstrap": "^4.5.2",
